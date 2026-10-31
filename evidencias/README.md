@@ -157,3 +157,12 @@ Salve as imagens exatamente nesta pasta com os nomes:
 3. `03-listagem.png`
 4. `04-consulta-inexistente.png`
 5. `05-atualizacao.png`
+
+---
+
+## Dica de Validação: Collection Runner do Postman
+Para validar que todas as 16 requisições e asserções da aba **"Tests"** estão passando antes de tirar os prints:
+1. Com a API rodando (`npm start`), abra o Postman;
+2. Clique com o botão direito na coleção **"API Gerenciamento de Pedidos..."** e selecione **"Run collection"**;
+3. Clique em **"Run API Gerenciamento de Pedidos"**;
+4. Observe que todas as asserções de Pedro Akylas e Rafaela Marques serão executadas em sequência com resultado 100% verde (`passed`).
