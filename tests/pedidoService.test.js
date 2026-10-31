@@ -228,10 +228,48 @@ describe('PedidoService - Testes Unitários de Regras de Negócio', () => {
       );
     });
 
+    test('deve aplicar trim e aceitar status valido com espacos nas extremidades', () => {
+      const atualizado = pedidoService.atualizarStatus(pedidoId, '  em_preparacao  ');
+      expect(atualizado.status).toBe(STATUS.EM_PREPARACAO);
+    });
+
     test('deve lancar NotFoundError para ID inexistente', () => {
       expect(() => pedidoService.atualizarStatus(888, STATUS.CANCELADO)).toThrow(
         NotFoundError
       );
+    });
+  });
+
+  describe('Constantes e Imutabilidade', () => {
+    test('todas as constantes de dominio devem ser imutaveis (congeladas)', () => {
+      const {
+        TIPOS_PERMITIDOS,
+        PRIORIDADES_PERMITIDAS,
+        STATUS,
+        STATUS_PERMITIDOS,
+        TRANSICOES_PERMITIDAS
+      } = require('../src/config/constants');
+
+      expect(Object.isFrozen(TIPOS_PERMITIDOS)).toBe(true);
+      expect(Object.isFrozen(PRIORIDADES_PERMITIDAS)).toBe(true);
+      expect(Object.isFrozen(STATUS)).toBe(true);
+      expect(Object.isFrozen(STATUS_PERMITIDOS)).toBe(true);
+      expect(Object.isFrozen(TRANSICOES_PERMITIDAS)).toBe(true);
+    });
+
+    test('repositorio deve retornar copia defensiva protegendo integridade dos dados', () => {
+      pedidoService.cadastrarPedido({
+        cliente: 'Pedro Akylas',
+        tipo: 'entrega',
+        valor: 100,
+        prioridade: 'normal'
+      });
+
+      const lista1 = pedidoRepository.listar();
+      lista1[0].cliente = 'Nome Modificado Externamente';
+
+      const lista2 = pedidoRepository.listar();
+      expect(lista2[0].cliente).toBe('Pedro Akylas');
     });
   });
 });
