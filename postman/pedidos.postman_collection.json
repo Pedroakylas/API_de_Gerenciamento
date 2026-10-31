@@ -1,0 +1,628 @@
+{
+  "info": {
+    "_postman_id": "pedidos-api-pedro-akylas-rafaela-marques",
+    "name": "API Gerenciamento de Pedidos - Pedro Akylas (RGM: 45543232) e Rafaela Marques (RGM: 46321365)",
+    "description": "Coleção de testes para Postman com asserções automatizadas na aba 'Tests' para Pedro Akylas e Rafaela Marques.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Testes do Pedro Akylas (RGM: 45543232)",
+      "item": [
+        {
+          "name": "01 - Criar Pedido Válido - Pedro Akylas (201) [Print 01]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[Pedro] Status code é 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"[Pedro] Pedido cadastrado com cliente 'Pedro Akylas'\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.cliente).to.eql(\"Pedro Akylas\");",
+                  "    pm.expect(json.tipo).to.eql(\"entrega\");",
+                  "    pm.expect(json.valor).to.eql(350);",
+                  "    pm.expect(json.prioridade).to.eql(\"normal\");",
+                  "    pm.expect(json.status).to.eql(\"recebido\");",
+                  "    pm.expect(json.id).to.be.a(\"number\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"Pedro Akylas\",\n  \"tipo\": \"entrega\",\n  \"valor\": 350,\n  \"prioridade\": \"normal\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos"]
+            },
+            "description": "Cadastra pedido para o aluno Pedro Akylas. Retorna 201 Created com status inicial 'recebido'."
+          }
+        },
+        {
+          "name": "02 - Consultar Pedido por ID - Pedro Akylas (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[Pedro] Status code é 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"[Pedro] Pedido consultado pertence a Pedro Akylas\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.id).to.eql(1);",
+                  "    pm.expect(json.cliente).to.eql(\"Pedro Akylas\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "1"]
+            },
+            "description": "Consulta o pedido criado para Pedro Akylas pelo ID 1."
+          }
+        },
+        {
+          "name": "03 - Atualizar Status para em_preparacao - Pedro Akylas (200) [Print 05]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[Pedro] Status code é 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"[Pedro] Status alterado para 'em_preparacao'\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.status).to.eql(\"em_preparacao\");",
+                  "    pm.expect(json.cliente).to.eql(\"Pedro Akylas\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"em_preparacao\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/1/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "1", "status"]
+            },
+            "description": "Atualiza o status do pedido de Pedro Akylas de 'recebido' para 'em_preparacao'."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Testes da Rafaela Marques (RGM: 46321365)",
+      "item": [
+        {
+          "name": "04 - Criar Pedido Válido - Rafaela Marques (201)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[Rafaela] Status code é 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"[Rafaela] Pedido cadastrado com cliente 'Rafaela Marques'\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.cliente).to.eql(\"Rafaela Marques\");",
+                  "    pm.expect(json.tipo).to.eql(\"retirada\");",
+                  "    pm.expect(json.valor).to.eql(450);",
+                  "    pm.expect(json.prioridade).to.eql(\"alta\");",
+                  "    pm.expect(json.status).to.eql(\"recebido\");",
+                  "    pm.expect(json.id).to.be.a(\"number\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"Rafaela Marques\",\n  \"tipo\": \"retirada\",\n  \"valor\": 450,\n  \"prioridade\": \"alta\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos"]
+            },
+            "description": "Cadastra pedido para a aluna Rafaela Marques. Retorna 201 Created."
+          }
+        },
+        {
+          "name": "05 - Consultar Pedido por ID - Rafaela Marques (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[Rafaela] Status code é 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"[Rafaela] Pedido consultado pertence a Rafaela Marques\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.id).to.eql(2);",
+                  "    pm.expect(json.cliente).to.eql(\"Rafaela Marques\");",
+                  "    pm.expect(json.tipo).to.eql(\"retirada\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "2"]
+            },
+            "description": "Consulta o pedido criado para Rafaela Marques pelo ID 2."
+          }
+        },
+        {
+          "name": "06 - Cancelar Pedido - Rafaela Marques (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[Rafaela] Status code é 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"[Rafaela] Status cancelado com sucesso\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.status).to.eql(\"cancelado\");",
+                  "    pm.expect(json.cliente).to.eql(\"Rafaela Marques\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"cancelado\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/2/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "2", "status"]
+            },
+            "description": "Atualiza o status do pedido de Rafaela Marques de 'recebido' para 'cancelado'."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Rotas Globais e Listagem",
+      "item": [
+        {
+          "name": "07 - Rota Inicial Informativa com Pedro e Rafaela (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna informações de Pedro e Rafaela\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.alunos).to.be.an(\"array\").that.has.lengthOf(2);",
+                  "    pm.expect(json.alunos[0].nome).to.eql(\"Pedro Akylas\");",
+                  "    pm.expect(json.alunos[0].rgm).to.eql(\"45543232\");",
+                  "    pm.expect(json.alunos[1].nome).to.eql(\"Rafaela Marques\");",
+                  "    pm.expect(json.alunos[1].rgm).to.eql(\"46321365\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            },
+            "description": "Retorna o status operacional da API e a identificação dos alunos."
+          }
+        },
+        {
+          "name": "08 - Listar Todos os Pedidos (200) [Print 03]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna lista de pedidos cadastrados\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(Array.isArray(json)).to.be.true;",
+                  "    pm.expect(json.length).to.be.at.least(2);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos"]
+            },
+            "description": "Retorna todos os pedidos cadastrados na memória."
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Validações e Erros (400 e 404)",
+      "item": [
+        {
+          "name": "09 - Criar Pedido - Cliente Vazio (400) [Print 02]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna mensagem de cliente obrigatório\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.erro).to.include(\"campo 'cliente' é obrigatório\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"   \",\n  \"tipo\": \"entrega\",\n  \"valor\": 350,\n  \"prioridade\": \"normal\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos"]
+            },
+            "description": "Rejeita cliente em branco com 400 Bad Request."
+          }
+        },
+        {
+          "name": "10 - Criar Pedido - Valor Inválido ou Negativo (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna mensagem de valor maior que zero\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.erro).to.include(\"campo 'valor' deve ser um número maior que zero\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"Pedro Akylas\",\n  \"tipo\": \"entrega\",\n  \"valor\": -50,\n  \"prioridade\": \"normal\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos"]
+            },
+            "description": "Rejeita valor menor ou igual a zero com 400 Bad Request."
+          }
+        },
+        {
+          "name": "11 - Criar Pedido - Tipo Inválido (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"Rafaela Marques\",\n  \"tipo\": \"correios\",\n  \"valor\": 100,\n  \"prioridade\": \"normal\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos"]
+            },
+            "description": "Rejeita tipo fora de ['entrega', 'retirada']."
+          }
+        },
+        {
+          "name": "12 - Consultar Pedido por ID Inexistente (404) [Print 04]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna mensagem de pedido não encontrado\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.erro).to.include(\"não encontrado\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/999",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "999"]
+            },
+            "description": "Retorna 404 quando o ID é inteiro mas não existe no repositório."
+          }
+        },
+        {
+          "name": "13 - Consultar Pedido - ID Inválido (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna mensagem de ID inteiro positivo\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.erro).to.include(\"número inteiro positivo\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "abc"]
+            },
+            "description": "Retorna 400 quando o ID não é um inteiro positivo."
+          }
+        },
+        {
+          "name": "14 - Atualizar Status - Transição Inválida (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Retorna mensagem de transição inválida\", function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.erro).to.include(\"Transição de status inválida\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"entregue\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/1/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "1", "status"]
+            },
+            "description": "Transição direta de 'recebido' para 'entregue' não é permitida. Retorna 400."
+          }
+        },
+        {
+          "name": "15 - Atualizar Status - Status Desconhecido (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"em_transito\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/1/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "1", "status"]
+            },
+            "description": "Status desconhecido retorna 400."
+          }
+        },
+        {
+          "name": "16 - Atualizar Status - ID Inexistente (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code é 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"cancelado\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pedidos/999/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["pedidos", "999", "status"]
+            },
+            "description": "Retorna 404 ao tentar atualizar status de pedido inexistente."
+          }
+        }
+      ]
+    }
+  ]
+}
