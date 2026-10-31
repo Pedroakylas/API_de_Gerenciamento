@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "jest --runInBand",
-    "test:coverage": "jest --runInBand --coverage"
+    "test:unit": "jest tests/pedidoService.test.js --runInBand",
+    "test:integration": "jest tests/pedido.test.js --runInBand",
+    "test:coverage": "jest --runInBand --coverage",
+    "test:verbose": "jest --verbose --runInBand"
   },
   "keywords": [
     "express",
