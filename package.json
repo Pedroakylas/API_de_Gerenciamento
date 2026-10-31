@@ -1,0 +1,31 @@
+{
+  "name": "pedro-akylas-api-pedidos",
+  "version": "1.0.0",
+  "description": "API REST de Gerenciamento de Pedidos para avaliacao academica - Pedro Akylas (RGM: 45543232) e Rafaela Marques (RGM: 46321365)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage"
+  },
+  "keywords": [
+    "express",
+    "jest",
+    "supertest",
+    "pedidos",
+    "rest-api"
+  ],
+  "author": "Pedro Akylas (RGM: 45543232) e Rafaela Marques (RGM: 46321365)",
+  "contributors": [
+    "Pedro Akylas (RGM: 45543232)",
+    "Rafaela Marques (RGM: 46321365)"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
