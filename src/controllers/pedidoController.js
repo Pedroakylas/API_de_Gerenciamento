@@ -3,12 +3,19 @@
  * Responsabilidade unica: intermediar a requisicao HTTP e o servico de dominio.
  * Extrai dados de req (body e params), chama o service correspondente e retorna
  * o status HTTP e JSON apropriados. Nao contem regras de validacao ou de negocio.
+ * 
+ * Mapeamento HTTP:
+ * - POST /pedidos           -> 201 Created
+ * - GET  /pedidos           -> 200 OK
+ * - GET  /pedidos/:id       -> 200 OK (ou 404 se inexistente)
+ * - PATCH /pedidos/:id/status -> 200 OK (ou 400/404 conforme validacao)
  */
 
 const pedidoService = require('../services/pedidoService');
 
 /**
  * Cria um novo pedido. Retorna HTTP 201 Created em caso de sucesso.
+ * Qualquer erro de validacao e capturado e encaminhado via next(error).
  */
 function criar(req, res, next) {
   try {

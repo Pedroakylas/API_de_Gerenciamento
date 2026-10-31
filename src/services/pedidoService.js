@@ -39,24 +39,25 @@ function cadastrarPedido(dados) {
 
   const { cliente, tipo, valor, prioridade } = dados;
 
-  // Validacao de cliente: obrigatorio, string, nao vazia apos trim()
+  // RF01 - Validacao de cliente: obrigatorio, tipo string, nao vazio mesmo apos trim()
+  // O valor sera persistido limpo sem espacos adicionais nas pontas
   if (typeof cliente !== 'string' || cliente.trim().length === 0) {
     throw new ValidationError("O campo 'cliente' é obrigatório e não pode ser vazio");
   }
 
-  // Validacao de valor: number estrito (rejeita string, NaN, Infinity, null, boolean) e maior que zero
+  // RF01 - Validacao de valor: obrigatorio, tipo number estrito (rejeita string, NaN, Infinity, null, boolean) e estritamente positivo (> 0)
   if (typeof valor !== 'number' || !Number.isFinite(valor) || valor <= 0) {
     throw new ValidationError("O campo 'valor' deve ser um número maior que zero");
   }
 
-  // Validacao de tipo: valores permitidos em TIPOS_PERMITIDOS ('entrega', 'retirada')
+  // RF01 - Validacao de tipo: restrito a 'entrega' ou 'retirada' (definido em constants.js)
   if (typeof tipo !== 'string' || !TIPOS_PERMITIDOS.includes(tipo)) {
     throw new ValidationError(
       `O campo 'tipo' deve ser um dos seguintes valores: ${TIPOS_PERMITIDOS.join(', ')}`
     );
   }
 
-  // Validacao de prioridade: valores permitidos em PRIORIDADES_PERMITIDAS ('baixa', 'normal', 'alta')
+  // RF01 - Validacao de prioridade: restrito a 'baixa', 'normal' ou 'alta' (definido em constants.js)
   if (typeof prioridade !== 'string' || !PRIORIDADES_PERMITIDAS.includes(prioridade)) {
     throw new ValidationError(
       `O campo 'prioridade' deve ser um dos seguintes valores: ${PRIORIDADES_PERMITIDAS.join(', ')}`
