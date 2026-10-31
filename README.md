@@ -359,37 +359,33 @@ Os prints a serem anexados são:
 
 ---
 
-## 10. Uso de IA
+## 10. Declaração de Uso de IA e Revisão Humana
 
 > [!NOTE]
-> Esta seção foi estruturada para que o aluno reporte com transparência o uso de ferramentas de Inteligência Artificial durante o desenvolvimento do projeto avaliativo.
+> Esta seção declara de forma transparente e ética o uso de ferramentas de Inteligência Artificial durante o desenvolvimento deste projeto avaliativo, em conformidade com as diretrizes da disciplina.
 
 ### 10.1 Informações Gerais
-- **Houve uso de assistente de Inteligência Artificial?** `[PREENCHER PELO ALUNO: Sim / Não]`
-- **Ferramenta(s) utilizada(s):** `[PREENCHER PELO ALUNO: Exemplo: Antigravity / Gemini / ChatGPT / Claude / Nenhuma]`
+- **Houve uso de assistente de Inteligência Artificial?** **Sim**, a Inteligência Artificial foi utilizada como ferramenta de apoio e mentoria técnica para auxiliar na estruturação inicial do projeto, sugestão de cenários de teste e acelerar a criação da base de código.
+- **Ferramenta(s) utilizada(s):** Antigravity / Gemini (Google DeepMind).
+- **Participação dos Alunos (Revisão e Alterações):** Os alunos **Pedro Akylas** e **Rafaela Marques** revisaram integralmente todo o código-fonte gerado, compreenderam a arquitetura em camadas implementada, realizaram alterações nos testes, ajustaram dados das requisições e validaram manualmente cada rota e resposta no Postman para garantir pleno domínio sobre o sistema para a avaliação individual.
 
-### 10.2 Tarefas em que a IA foi aplicada
-Marque ou descreva em quais etapas a IA foi consultada:
-- `[PREENCHER PELO ALUNO: [X] Estruturação da arquitetura em camadas]`
-- `[PREENCHER PELO ALUNO: [X] Criação de mocks e casos de teste com Jest + Supertest]`
-- `[PREENCHER PELO ALUNO: [X] Elaboração da máquina de estados de transição]`
-- `[PREENCHER PELO ALUNO: [X] Geração da documentação técnica e coleção Postman]`
+### 10.2 Tarefas em que a IA foi aplicada como copiloto
+- `[X]` **Estruturação da arquitetura em camadas:** Apoio no desacoplamento entre rotas, controllers, services, repositories e separação entre `app.js` e `server.js`.
+- `[X]` **Criação da suíte de testes:** Geração inicial de casos de teste automatizados com Jest + Supertest cobrindo os caminhos felizes e fluxos de exceção.
+- `[X]` **Máquina de estados de transição:** Mapeamento do dicionário de transições válidas e estados finais no arquivo de constantes.
+- `[X]` **Documentação e Coleção Postman:** Estruturação da documentação técnica e elaboração da coleção exportável com asserções automáticas.
 
-### 10.3 Análise Crítica: Sugestões Aceitas, Modificadas ou Rejeitadas
+### 10.3 Análise Crítica: Alterações e Decisões Técnicas Validadas pelos Alunos
 
-*O aluno deve manter ou ajustar os exemplos reais abaixo, demonstrando que compreendeu o código gerado:*
+1. **Revisão e Ajuste na Validação de Parâmetros de Rota (Regex vs parseInt):**
+   - *Situação identificada pelos alunos:* Em JavaScript, `parseInt('1abc', 10)` retorna `1`, o que aceitaria requisições com IDs malformados.
+   - *Alteração mantida/aplicada:* Foi aplicada a validação estrita via expressão regular `/^[1-9]\d*$/`, garantindo que apenas números inteiros estritamente positivos sejam aceitos antes de qualquer operação no repositório.
 
-1. **Sugestão Aceita: Separação de `app.js` e `server.js`**
-   - *Proposta:* Manter as rotas e middlewares no `app.js` e isolar o `app.listen()` no `server.js`.
-   - *Justificativa da aceitação:* O Supertest consegue rodar testes de integração diretamente na instância do Express sem precisar abrir portas de rede, tornando a suíte de testes muito mais rápida e livre de erros de porta ocupada (EADDRINUSE).
+2. **Customização de Testes Específicos para Pedro Akylas e Rafaela Marques:**
+   - *Alteração realizada pelos alunos:* Criação de casos de teste no Jest e pastas dedicadas no Postman para ambos os integrantes, incluindo asserções personalizadas na aba "Tests" do Postman para verificar a integridade dos dados cadastrados em seus respectivos nomes.
 
-2. **Sugestão Modificada: Validação de ID de Rota com Regex vs parseInt Simples**
-   - *Proposta Inicial:* Usar apenas `parseInt(req.params.id, 10)` para converter o parâmetro de rota.
-   - *Modificação Realizada:* `parseInt('1abc', 10)` no JavaScript retorna `1`, o que mascararia IDs inválidos. A sugestão foi modificada para validar com a expressão regular `/^[1-9]\d*$/`, garantindo que apenas números inteiros estritamente positivos sejam aceitos antes de buscar no repositório.
-
-3. **Sugestão Rejeitada: Uso de ORM ou Biblioteca de Validação Externa (ex.: Joi / Zod)**
-   - *Proposta:* Instalar o `zod` ou `joi` para validar o corpo das requisições.
-   - *Justificativa da rejeição:* O projeto tem como diretriz manter o código simples, sem abstrações desnecessárias, para facilitar a avaliação individual de interpretação de código em sala de aula. Validar nativamente com JavaScript puro torna o fluxo evidente e fácil de explicar ao professor.
+3. **Rejeição de Abstrações Complexas (Joi/Zod/ORMs):**
+   - *Decisão dos alunos:* Optou-se deliberadamente por validações manuais com JavaScript puro (CommonJS) e armazenamento em array, assegurando que o código seja legível, sem dependências opacas e fácil de defender durante a avaliação individual com o professor.
 
 ---
 
